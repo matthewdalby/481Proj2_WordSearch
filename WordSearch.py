@@ -12,18 +12,27 @@ def isValid(mat, x, y, path):
 
 
 def DFS(mat, word, i, j, path=[], index=0):
-
-
+	#Recursive DFS
+	
 	if index == len(word):
+		#Base Case, if the index is the length of the word; then the word has been found
+		#Print the word; But only if it has not been printed before
 		if [(word[i], path[i]) for i in range(0, len(word))] not in result:
 			result.append([(word[i], path[i]) for i in range(0, len(word))])
 		return
 	if (isValid(mat,i,j,path) and mat[i][j]==word[index]):
+		#Recursive function
+		#Add current matrix indicies to path
 		path.append((i,j))
+		#For each valid neighbor, run DFS on it.
+		#A valid neighbor is one that is not already in the path, and has the correct value.
+		#Correct value is just word[index]
 		for k in range(len(row)):
 			DFS(mat,word,i+row[k],j+col[k],path,index+1)
+		#Once the current node has finished the DFS, we remove it from the path
 		path.remove((i,j))
 	else:
+		#Exits the function when path is empty
 		return
 			
 	
@@ -51,6 +60,7 @@ if __name__ == '__main__':
 
 	WordSearch(mat, word)
 
+	#Prints the results
 	for row in result:
 		print(row)
 
